@@ -28,11 +28,16 @@ public class LoginUI extends JFrame {
         this.setLocation(x, y);
 
         this.btn_login.addActionListener(e -> {
-            if (Helper.isFieldListEmpty(new JTextField[]{fld_mail, fld_password})) {
-                System.out.println("Tüm alanları doldurun.");
-            } else {
-                System.out.println("Giriş yapabilirsiniz.");
+            if (!Helper.isEmailValid(this.fld_mail.getText())) {
+                Helper.showInfoMessage("Geçerli bir eposta adresi giriniz.");
             }
-        }); // Added closing parenthesis and semicolon here
+            if (Helper.isFieldListEmpty(new JTextField[]{fld_mail, fld_password})) {
+                Helper.showInfoMessage("fill");
+
+            } else {
+                Helper.showInfoMessage("done");
+
+            }
+        });
     }
 }
