@@ -27,4 +27,40 @@ public class Helper {
         }
         return false;
     }
+
+    public static boolean isEmailValid(String mail) {
+        if (mail == null || mail.trim().isEmpty()) return false;
+        if (!mail.contains("@")) return false;
+
+        String[] parts = mail.split("@");
+        if (parts.length != 2) return false;
+        if (parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) return false;
+        if (!parts[1].contains(".")) return false;
+
+        return true;
+    }
+
+    public static void showInfoMessage(String message) {
+        String msg;
+        String title;
+
+        switch (message) {
+            case "fill":
+                msg = "Lütfen tüm alanları doldurunuz.";
+                title = "HATA";
+                break;
+            case "done":
+                msg = "İşlem başarılı";
+                title = "Sonuç";
+                break;
+            case "error":
+                msg = "Bir hata oluştu.";
+                title = "HATA";
+                break;
+            default:
+                msg = message;
+                title = "Mesaj";
+        }
+        JOptionPane.showMessageDialog(null, msg, title, JOptionPane.INFORMATION_MESSAGE);
+    }
 }
