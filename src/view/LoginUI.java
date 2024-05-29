@@ -1,11 +1,14 @@
 package view;
 
+import business.UserController;
 import core.Helper;
+import entity.User;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class LoginUI extends JFrame {
     private JPanel container;
@@ -17,8 +20,10 @@ public class LoginUI extends JFrame {
     private JLabel lbl_mail;
     private JLabel lbl_password;
     private JPasswordField fld_password;
+    private UserController userController;
 
-    public LoginUI() {
+    public LoginUI() throws SQLException {
+        this.userController = new UserController();
         this.add(container);
         this.setTitle("Müşteri Yönetim Sistemi");
         this.setSize(400, 400);
@@ -30,13 +35,16 @@ public class LoginUI extends JFrame {
         this.btn_login.addActionListener(e -> {
             if (!Helper.isEmailValid(this.fld_mail.getText())) {
                 Helper.showInfoMessage("Geçerli bir eposta adresi giriniz.");
-            }
-            if (Helper.isFieldListEmpty(new JTextField[]{fld_mail, fld_password})) {
+            } else if (Helper.isFieldListEmpty(new JTextField[]{fld_mail, fld_password})) {
                 Helper.showInfoMessage("fill");
 
             } else {
-                Helper.showInfoMessage("done");
-
+                User user = this.userController.findByLogin(this.fld_mail.getText(), this.fld_password.getText());
+                if (user == null) {
+                    Helper.showInfoMessage("Girdiğiniz bilgilere göre kullanıcı bulunamadı.");
+                } else {
+                    System.out.println(user.toString());
+                }
             }
         });
     }
