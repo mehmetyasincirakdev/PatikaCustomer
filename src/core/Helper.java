@@ -40,10 +40,14 @@ public class Helper {
         return true;
     }
 
+    public static void optionPaneDialogTR() {
+        UIManager.put("OptionPane.okButtonText", "Tamam");
+    }
+
     public static void showInfoMessage(String message) {
         String msg;
         String title;
-
+        optionPaneDialogTR();
         switch (message) {
             case "fill":
                 msg = "Lütfen tüm alanları doldurunuz.";
